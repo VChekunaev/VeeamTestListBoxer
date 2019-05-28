@@ -32,16 +32,16 @@
             this.checkBox_numeric = new System.Windows.Forms.CheckBox();
             this.checkBox_aplhabetic = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.descendingRadioButton = new System.Windows.Forms.RadioButton();
+            this.ascendingRadioButton = new System.Windows.Forms.RadioButton();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.inputTextBox = new System.Windows.Forms.TextBox();
             this.resultTextBox = new System.Windows.Forms.TextBox();
             this.addButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.recordLabel = new System.Windows.Forms.Label();
+            this.totalLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -79,8 +79,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.radioButton2);
-            this.groupBox2.Controls.Add(this.radioButton1);
+            this.groupBox2.Controls.Add(this.descendingRadioButton);
+            this.groupBox2.Controls.Add(this.ascendingRadioButton);
             this.groupBox2.Location = new System.Drawing.Point(12, 55);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 87);
@@ -88,27 +88,29 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Sort Order";
             // 
-            // radioButton2
+            // descendingRadioButton
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(7, 43);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(76, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Desceding";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.descendingRadioButton.AutoSize = true;
+            this.descendingRadioButton.Location = new System.Drawing.Point(7, 43);
+            this.descendingRadioButton.Name = "descendingRadioButton";
+            this.descendingRadioButton.Size = new System.Drawing.Size(82, 17);
+            this.descendingRadioButton.TabIndex = 1;
+            this.descendingRadioButton.TabStop = true;
+            this.descendingRadioButton.Text = "Descending";
+            this.descendingRadioButton.UseVisualStyleBackColor = true;
+            this.descendingRadioButton.CheckedChanged += new System.EventHandler(this.RadioButton2_CheckedChanged);
             // 
-            // radioButton1
+            // ascendingRadioButton
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(7, 20);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(75, 17);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Ascending";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.ascendingRadioButton.AutoSize = true;
+            this.ascendingRadioButton.Location = new System.Drawing.Point(7, 20);
+            this.ascendingRadioButton.Name = "ascendingRadioButton";
+            this.ascendingRadioButton.Size = new System.Drawing.Size(75, 17);
+            this.ascendingRadioButton.TabIndex = 0;
+            this.ascendingRadioButton.TabStop = true;
+            this.ascendingRadioButton.Text = "Ascending";
+            this.ascendingRadioButton.UseVisualStyleBackColor = true;
+            this.ascendingRadioButton.CheckedChanged += new System.EventHandler(this.RadioButton1_CheckedChanged);
             // 
             // comboBox1
             // 
@@ -117,7 +119,9 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(155, 21);
             this.comboBox1.TabIndex = 6;
+            this.comboBox1.Text = "<none>";
             this.comboBox1.DropDown += new System.EventHandler(this.ComboBox1_DropDown);
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -141,10 +145,9 @@
             this.resultTextBox.Multiline = true;
             this.resultTextBox.Name = "resultTextBox";
             this.resultTextBox.ReadOnly = true;
-            this.resultTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.resultTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.resultTextBox.Size = new System.Drawing.Size(156, 181);
             this.resultTextBox.TabIndex = 9;
-            this.resultTextBox.TextChanged += new System.EventHandler(this.Text_Appear);
             // 
             // addButton
             // 
@@ -167,31 +170,31 @@
             this.clearButton.UseVisualStyleBackColor = true;
             this.clearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
-            // label2
+            // recordLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(381, 196);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 13);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "record";
+            this.recordLabel.AutoSize = true;
+            this.recordLabel.Location = new System.Drawing.Point(381, 196);
+            this.recordLabel.Name = "recordLabel";
+            this.recordLabel.Size = new System.Drawing.Size(37, 13);
+            this.recordLabel.TabIndex = 12;
+            this.recordLabel.Text = "record";
             // 
-            // label3
+            // totalLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(381, 223);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(27, 13);
-            this.label3.TabIndex = 13;
-            this.label3.Text = "total";
+            this.totalLabel.AutoSize = true;
+            this.totalLabel.Location = new System.Drawing.Point(381, 223);
+            this.totalLabel.Name = "totalLabel";
+            this.totalLabel.Size = new System.Drawing.Size(27, 13);
+            this.totalLabel.TabIndex = 13;
+            this.totalLabel.Text = "total";
             // 
             // ListBoxer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(497, 248);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.totalLabel);
+            this.Controls.Add(this.recordLabel);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.resultTextBox);
@@ -226,10 +229,10 @@
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.CheckBox checkBox_numeric;
         private System.Windows.Forms.CheckBox checkBox_aplhabetic;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RadioButton descendingRadioButton;
+        private System.Windows.Forms.RadioButton ascendingRadioButton;
+        private System.Windows.Forms.Label recordLabel;
+        private System.Windows.Forms.Label totalLabel;
     }
 }
 
