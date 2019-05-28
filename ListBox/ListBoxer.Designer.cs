@@ -1,4 +1,4 @@
-﻿namespace ListBox
+﻿namespace ListBoxer
 {
     partial class ListBoxer
     {
