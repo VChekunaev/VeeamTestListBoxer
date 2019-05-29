@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crypto.cs" />
     <Compile Include="ListBoxer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +55,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolStripControls.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Worker.cs" />
     <EmbeddedResource Include="ListBoxer.resx">
       <DependentUpon>ListBoxer.cs</DependentUpon>

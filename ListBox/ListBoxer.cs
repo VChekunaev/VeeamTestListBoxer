@@ -119,5 +119,6 @@ namespace ListBoxer
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e) => LineReloads();
         private void RadioButton1_CheckedChanged(object sender, EventArgs e) => resultTextBox.Lines = resultTextBox.Lines.OrderBy(x => x).ToArray();
         private void RadioButton2_CheckedChanged(object sender, EventArgs e) => resultTextBox.Lines = resultTextBox.Lines.OrderByDescending(x => x).ToArray();
+
     }
 }

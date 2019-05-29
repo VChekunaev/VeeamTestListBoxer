@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.Cryptography;
+using System.IO;
 
 
 namespace ListBoxer
@@ -18,7 +20,6 @@ namespace ListBoxer
             else
                 source.AppendText("\r\n" + value);
         }
-
         public static List<string> All(List<string> lines)
         {
 
@@ -29,7 +30,6 @@ namespace ListBoxer
             var result1 = lines.Where(fltr => fltr.ToUpper().StartsWith("", true, null)).OrderBy(t => t).ToList();
             return result1;
         }
-
         public static async void CheckBufferedLines(this Button button)
         {
             while (true)
@@ -38,7 +38,6 @@ namespace ListBoxer
                 button.Enabled = BufferedLines.Count > 0;
             }
         }
-
         public static async void RecordsChecker(this Label label, string message)
         {
             while (true)
@@ -47,6 +46,5 @@ namespace ListBoxer
                 label.Text = message;
             }
         }
-
     }
 }
