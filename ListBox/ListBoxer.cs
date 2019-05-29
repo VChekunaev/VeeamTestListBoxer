@@ -62,6 +62,7 @@ namespace ListBoxer
         }
         private void LineReloads()
         {
+            resultlistBox.Items.Clear();
             IEnumerable<string> result = new List<string>();
             if (checkBox_aplhabetic.Checked || checkBox_numeric.Checked)
             {
@@ -105,7 +106,7 @@ namespace ListBoxer
                         break;
                     case "All":
                         if (checkBox_aplhabetic.Checked && !checkBox_numeric.Checked)
-                            result = 
+                            result =
                                  Worker.BufferedLines
                                 .Where(x => !Regex.IsMatch(inputTextBox.Text, "[1-9]"))
                                 .Where(fltr => fltr.ToLower()[0] >= 'a' && fltr.ToLower()[0] <= 'z').ToList();
@@ -121,19 +122,35 @@ namespace ListBoxer
                         break;
                 }
             }
-            resultTextBox.Lines = result.ToArray();
+            resultlistBox.Items.AddRange(result.ToArray());
         }
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e) => LineReloads();
-        private void RadioButton1_CheckedChanged(object sender, EventArgs e) => resultTextBox.Lines = resultTextBox.Lines.OrderBy(x => x).ToArray();
-        private void RadioButton2_CheckedChanged(object sender, EventArgs e) => resultTextBox.Lines = resultTextBox.Lines.OrderByDescending(x => x).ToArray();
+        private void RadioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            resultlistBox.Items.Clear();
+            resultlistBox.Items.AddRange(resultlistBox.Items.Cast<string>().OrderBy(x => x).ToArray());
+        }
+
+        private void RadioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            resultlistBox.Items.Clear();
+            resultlistBox.Items.AddRange(resultlistBox.Items.Cast<string>().OrderByDescending(x => x).ToArray());
+        }
+
         private async void RecordsChecker()
         {
             while (true)
             {
                 await Task.Delay(1);
-                recordLabel.Text = $"Records in List: {resultTextBox.Lines.Count()}";
+                recordLabel.Text = $"Records in List: {resultlistBox.Items.Count}";
                 totalLabel.Text = $"Total records: {Worker.BufferedLines.Count()}";
             }
+        }
+
+        private void CutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (resultlistBox.SelectedItem != null)
+                Clipboard.SetText(resultlistBox.Items.Eject(resultlistBox.SelectedItem.ToString()));
         }
     }
 }

@@ -26,8 +26,8 @@ namespace ListBoxer
         {
             saveFileDialog.InitialDirectory = LbxDir;
             saveFileDialog.ShowDialog();
-
-            byte[] byteArray = Encoding.Default.GetBytes(resultTextBox.Text);
+            string pString = string.Join(",",resultlistBox.Items.Cast<string>());
+            byte[] byteArray = Encoding.Default.GetBytes(pString);
             Crypto.EncryptAndSave(byteArray, saveFileDialog.FileName, chyperPass);
         }
 

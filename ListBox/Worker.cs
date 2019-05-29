@@ -38,13 +38,12 @@ namespace ListBoxer
                 button.Enabled = BufferedLines.Count > 0;
             }
         }
-        public static async void RecordsChecker(this Label label, string message)
+        public static string Eject(this ListBox.ObjectCollection objectCollection, string name)
         {
-            while (true)
-            {
-                await Task.Delay(1);
-                label.Text = message;
-            }
+            string findItem = objectCollection.Cast<string>().ToList().Find(x => x == name);
+            BufferedLines.Remove(name);
+            objectCollection.Remove(name);
+            return findItem;
         }
     }
 }

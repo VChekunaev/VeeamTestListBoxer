@@ -31,7 +31,7 @@ namespace ListBoxer
                 {
                     fsIn.CopyTo(cs);
                 }
-                Worker.BufferedLines = Encoding.Default.GetString(fsOut.ToArray()).Split(new string[] { "\r\n" }, StringSplitOptions.None).ToList();
+                Worker.BufferedLines = Encoding.Default.GetString(fsOut.ToArray()).Split(',').ToList();
             }
 
         }

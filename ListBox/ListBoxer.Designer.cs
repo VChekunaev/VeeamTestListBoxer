@@ -38,7 +38,6 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.inputTextBox = new System.Windows.Forms.TextBox();
-            this.resultTextBox = new System.Windows.Forms.TextBox();
             this.addButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.recordLabel = new System.Windows.Forms.Label();
@@ -62,6 +61,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.resultlistBox = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -160,16 +160,6 @@
             this.inputTextBox.Name = "inputTextBox";
             this.inputTextBox.Size = new System.Drawing.Size(156, 20);
             this.inputTextBox.TabIndex = 8;
-            // 
-            // resultTextBox
-            // 
-            this.resultTextBox.Location = new System.Drawing.Point(218, 55);
-            this.resultTextBox.Multiline = true;
-            this.resultTextBox.Name = "resultTextBox";
-            this.resultTextBox.ReadOnly = true;
-            this.resultTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.resultTextBox.Size = new System.Drawing.Size(156, 181);
-            this.resultTextBox.TabIndex = 9;
             // 
             // addButton
             // 
@@ -299,8 +289,9 @@
             // 
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cutToolStripMenuItem.Text = "Cut";
+            this.cutToolStripMenuItem.Click += new System.EventHandler(this.CutToolStripMenuItem_Click);
             // 
             // copyToolStripMenuItem
             // 
@@ -360,17 +351,25 @@
             this.saveFileDialog.DefaultExt = "lbx";
             this.saveFileDialog.Filter = "Database File | *.lbx";
             // 
+            // resultlistBox
+            // 
+            this.resultlistBox.FormattingEnabled = true;
+            this.resultlistBox.Location = new System.Drawing.Point(219, 55);
+            this.resultlistBox.Name = "resultlistBox";
+            this.resultlistBox.Size = new System.Drawing.Size(156, 186);
+            this.resultlistBox.TabIndex = 16;
+            // 
             // ListBoxer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(497, 248);
+            this.Controls.Add(this.resultlistBox);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.totalLabel);
             this.Controls.Add(this.recordLabel);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.addButton);
-            this.Controls.Add(this.resultTextBox);
             this.Controls.Add(this.inputTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
@@ -398,7 +397,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox resultTextBox;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.CheckBox checkBox_numeric;
@@ -427,6 +425,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.TextBox inputTextBox;
+        private System.Windows.Forms.ListBox resultlistBox;
     }
 }
 
