@@ -10,30 +10,58 @@ namespace ListBoxer
 {
     public static class Crypto
     {
-        public static byte[] FileEncryptor(string[] lines, SymmetricAlgorithm algorithm, byte[] rgbKey, byte[] rgbIV)
+        public static void LoadAndDecrypt(FileStream file, string password)
         {
-            //if (string.IsNullOrEmpty(fileIn))
-            //   throw new FileNotFoundException(string.Format("Неверный путь к файлу: {0}.", fileIn));
-            //if (!File.Exists(fileIn))
-            //    throw new FileNotFoundException(string.Format("Файл '{0}' не найден.", fileIn));
-
-            byte[] buffer = null;
-            using (MemoryStream stream = new MemoryStream())
+            using (var cypher = new AesManaged())
+            using (var fsIn = file)
+            using (var fsOut = new MemoryStream())
             {
-                using (SymmetricAlgorithm sa = algorithm)
+                const int saltLength = 256;
+                var salt = new byte[saltLength];
+                var iv = new byte[cypher.BlockSize / 8];
+
+                    fsIn.Read(salt, 0, saltLength);
+                    fsIn.Read(iv, 0, iv.Length);
+
+                var pdb = new Rfc2898DeriveBytes(password, salt);
+                var key = pdb.GetBytes(cypher.KeySize / 8);
+
+                using (ICryptoTransform cryptoTransform = cypher.CreateDecryptor(key, iv))
+                using (CryptoStream cs = new CryptoStream(fsOut, cryptoTransform, CryptoStreamMode.Write))
                 {
-                    using (CryptoStream cs = new CryptoStream(stream, sa.CreateEncryptor(rgbKey, rgbIV), CryptoStreamMode.Write))
-                    {
-                        using (var streamWriter = new StreamWriter(cs))
-                        {
-                            foreach (string line in lines)
-                                streamWriter.WriteLine(line);
-                        }
-                    }
+                    fsIn.CopyTo(cs);
                 }
-                buffer = stream.ToArray();
+                Worker.BufferedLines = Encoding.Default.GetString(fsOut.ToArray()).Split(new string[] { "\r\n" }, StringSplitOptions.None).ToList();
             }
-            return buffer;
+
+        }
+        public static void EncryptAndSave(byte[] input, string outputPath, string password)
+        {
+            using (var cypher = new AesManaged())
+            using (MemoryStream fsIn = new MemoryStream(input))
+            using (var fsOut = new FileStream(outputPath, FileMode.Create))
+            {
+                const int saltLength = 256;
+                var salt = new byte[saltLength];
+                var iv = new byte[cypher.BlockSize / 8];
+
+                    using (var rng = new RNGCryptoServiceProvider())
+                    {
+                        rng.GetBytes(salt);
+                        rng.GetBytes(iv);
+                    }
+                    fsOut.Write(salt, 0, salt.Length);
+                    fsOut.Write(iv, 0, iv.Length);
+
+                var pdb = new Rfc2898DeriveBytes(password, salt);
+                var key = pdb.GetBytes(cypher.KeySize / 8);
+
+                using (ICryptoTransform cryptoTransform = cypher.CreateEncryptor(key, iv))
+                using (CryptoStream cs = new CryptoStream(fsOut, cryptoTransform, CryptoStreamMode.Write))
+                {
+                    fsIn.CopyTo(cs);
+                }
+            }
         }
     }
 }

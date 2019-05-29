@@ -155,7 +155,8 @@
             // 
             // inputTextBox
             // 
-            this.inputTextBox.Location = new System.Drawing.Point(218, 29);
+            this.inputTextBox.Location = new System.Drawing.Point(219, 29);
+            this.inputTextBox.MaxLength = 8;
             this.inputTextBox.Name = "inputTextBox";
             this.inputTextBox.Size = new System.Drawing.Size(156, 20);
             this.inputTextBox.TabIndex = 8;
@@ -244,6 +245,7 @@
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.openToolStripMenuItem.Text = "Open...";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -396,7 +398,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox inputTextBox;
         private System.Windows.Forms.TextBox resultTextBox;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button clearButton;
@@ -425,6 +426,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.TextBox inputTextBox;
     }
 }
 
