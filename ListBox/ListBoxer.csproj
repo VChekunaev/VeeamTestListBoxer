@@ -61,7 +61,6 @@
     <Compile Include="ToolStripControls.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Worker.cs" />
     <EmbeddedResource Include="ListBoxer.resx">
       <DependentUpon>ListBoxer.cs</DependentUpon>
     </EmbeddedResource>

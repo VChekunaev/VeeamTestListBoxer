@@ -20,7 +20,7 @@ namespace ListBoxer
             {
                 await Task.Delay(1);
                 recordLabel.Text = $"Records in List: {resultlistBox.Items.Count}";
-                totalLabel.Text = $"Total records: {Worker.BufferedLines.Count()}";
+                totalLabel.Text = $"Total records: {BufferedLines.Count()}";
             }
         }
         private async void ClearEnabledChecker()
@@ -28,7 +28,7 @@ namespace ListBoxer
             while (true)
             {
                 await Task.Delay(1);
-                clearButton.Enabled = Worker.BufferedLines.Count > 0;
+                clearButton.Enabled = BufferedLines.Count > 0;
             }
         }
         private async void UndoEnabledCheker()
@@ -36,7 +36,7 @@ namespace ListBoxer
             while (true)
             {
                 await Task.Delay(1);
-                undoToolStripMenuItem.Enabled = Worker.UndoBufferedLines.Count > 0;
+                undoToolStripMenuItem.Enabled = UndoBufferedLines.Count > 0;
             }
         }
         private async void PasteEnabledChecker()

@@ -40,8 +40,9 @@ namespace ListBoxer
             if (resultlistBox.SelectedItem != null)
             {
                 Clipboard.SetText(resultlistBox.Items.Cast<string>().ToList().Find(x => x == resultlistBox.SelectedItem.ToString()));
-                Worker.UndoBufferedLines = Worker.BufferedLines;
-                Worker.BufferedLines.Remove(resultlistBox.SelectedItem.ToString());
+                UndoBufferedLines.Clear();
+                UndoBufferedLines.AddRange(BufferedLines.Select(x => x).ToList());
+                BufferedLines.Remove(resultlistBox.SelectedItem.ToString());
                 resultlistBox.Items.Remove(resultlistBox.SelectedItem.ToString());
             }
         }
@@ -63,8 +64,9 @@ namespace ListBoxer
                 if (condtition)
                 {
                     resultlistBox.Items.Add(buffer);
-                    Worker.UndoBufferedLines = Worker.BufferedLines;
-                    Worker.BufferedLines.Add(buffer);
+                    UndoBufferedLines.Clear();
+                    UndoBufferedLines.AddRange(BufferedLines.Select(x => x).ToList());
+                    BufferedLines.Add(buffer);
                 }
                 else
                     throw new Exception();
@@ -76,8 +78,9 @@ namespace ListBoxer
         }
         private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Worker.BufferedLines = Worker.UndoBufferedLines;
-            Worker.UndoBufferedLines.Clear();
+            BufferedLines.Clear();
+            BufferedLines.AddRange(UndoBufferedLines.Select(x => x).ToList());
+            UndoBufferedLines.Clear();
             LineReloads();
         }
     }

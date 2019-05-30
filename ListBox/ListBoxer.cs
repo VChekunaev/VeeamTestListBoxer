@@ -14,6 +14,8 @@ namespace ListBoxer
 {
     public partial class ListBoxer : Form
     {
+        public static List<string> UndoBufferedLines { get; set; } = new List<string>(0);
+        public static List<string> BufferedLines { get; set; } = new List<string>(0);
 
         public ListBoxer() => InitializeComponent();
         private void ListBoxer_Load(object sender, EventArgs e)
@@ -43,15 +45,17 @@ namespace ListBoxer
             {
                 if (inputTextBox.Text.Length == 0)
                     throw new Exception();
-                else if (checkBox_aplhabetic.Checked && Regex.IsMatch(inputTextBox.Text, "[1-9]"))
+                else if (checkBox_aplhabetic.Checked && Regex.IsMatch(inputTextBox.Text, "[a-zA-z]"))
                 {
-                    Worker.UndoBufferedLines = Worker.BufferedLines;
-                    Worker.BufferedLines.Add(inputTextBox.Text == "0" ? inputTextBox.Text : inputTextBox.Text.TrimStart('0', ' '));
+                    UndoBufferedLines.Clear();
+                    UndoBufferedLines.AddRange(BufferedLines.Select(x => x).ToList());
+                    BufferedLines.Add(inputTextBox.Text == "0" ? inputTextBox.Text : inputTextBox.Text.TrimStart('0', ' '));
                 }
-                else if (checkBox_numeric.Checked && Regex.IsMatch(inputTextBox.Text, "[a-zA-z]"))
+                else if (checkBox_numeric.Checked && Regex.IsMatch(inputTextBox.Text, "[1-9]"))
                 {
-                    Worker.UndoBufferedLines = Worker.BufferedLines;
-                    Worker.BufferedLines.Add(inputTextBox.Text == "0" ? inputTextBox.Text : inputTextBox.Text.TrimStart('0', ' '));
+                    UndoBufferedLines.Clear();
+                    UndoBufferedLines.AddRange(BufferedLines.Select(x => x).ToList());
+                    BufferedLines.Add(inputTextBox.Text == "0" ? inputTextBox.Text : inputTextBox.Text.TrimStart('0', ' '));
                 }
                 else
                     throw new Exception();
@@ -65,7 +69,7 @@ namespace ListBoxer
         }
         private void ClearButton_Click(object sender, EventArgs e)
         {
-            Worker.BufferedLines.Clear();
+            BufferedLines.Clear();
             LineReloads();
         }
         private void LineReloads()
@@ -78,46 +82,46 @@ namespace ListBoxer
                 {
                     case "Aa-Mm":
                         result =
-                             Worker.BufferedLines.Where(x => !Regex.IsMatch(inputTextBox.Text, "[1-9]"))
+                             BufferedLines.Where(x => !Regex.IsMatch(inputTextBox.Text, "[1-9]"))
                             .Where(fltr => fltr.ToLower()[0] >= 'a' && fltr.ToLower()[0] <= 'm').ToList();
                         break;
                     case "Nn-Zz":
                         result =
-                             Worker.BufferedLines.Where(x => !Regex.IsMatch(inputTextBox.Text, "[1-9]"))
+                             BufferedLines.Where(x => !Regex.IsMatch(inputTextBox.Text, "[1-9]"))
                             .Where(fltr => fltr.ToLower()[0] >= 'n' && fltr.ToLower()[0] <= 'z').ToList();
                         break;
                     case "0-100":
                         result =
-                             Worker.BufferedLines.Where(x => !Regex.IsMatch(x, "[a-zA-z]"))
+                             BufferedLines.Where(x => !Regex.IsMatch(x, "[a-zA-z]"))
                             .Where(fltr => Convert.ToInt32(fltr) >= 0 && Convert.ToInt32(fltr) <= 100).ToList();
                         break;
                     case "101-200":
                         result =
-                             Worker.BufferedLines.Where(x => !Regex.IsMatch(x, "[a-zA-z]"))
+                             BufferedLines.Where(x => !Regex.IsMatch(x, "[a-zA-z]"))
                             .Where(fltr => Convert.ToInt32(fltr) >= 101 && Convert.ToInt32(fltr) <= 200).ToList();
                         break;
                     case "201-300":
                         result =
-                             Worker.BufferedLines.Where(x => !Regex.IsMatch(x, "[a-zA-z]"))
+                             BufferedLines.Where(x => !Regex.IsMatch(x, "[a-zA-z]"))
                             .Where(fltr => Convert.ToInt32(fltr) >= 201 && Convert.ToInt32(fltr) <= 300).ToList();
                         break;
                     case "301-9999":
                         result =
-                             Worker.BufferedLines.Where(x => !Regex.IsMatch(x, "[a-zA-z]"))
+                             BufferedLines.Where(x => !Regex.IsMatch(x, "[a-zA-z]"))
                             .Where(fltr => Convert.ToInt32(fltr) >= 301 && Convert.ToInt32(fltr) <= 9999).ToList();
                         break;
                     case "All":
                         if (checkBox_aplhabetic.Checked && !checkBox_numeric.Checked)
                             result =
-                                 Worker.BufferedLines.Where(x => !Regex.IsMatch(inputTextBox.Text, "[1-9]"))
+                                 BufferedLines.Where(x => !Regex.IsMatch(inputTextBox.Text, "[1-9]"))
                                 .Where(fltr => fltr.ToLower()[0] >= 'a' && fltr.ToLower()[0] <= 'z').ToList();
                         if (!checkBox_aplhabetic.Checked && checkBox_numeric.Checked)
                             result =
-                                 Worker.BufferedLines.Where(x => !Regex.IsMatch(x, "[a-zA-z]"))
+                                 BufferedLines.Where(x => !Regex.IsMatch(x, "[a-zA-z]"))
                                 .Where(fltr => Convert.ToInt32(fltr) >= 0 && Convert.ToInt32(fltr) <= 9999).ToList();
                         if (checkBox_aplhabetic.Checked && checkBox_numeric.Checked)
-                            result = 
-                                 Worker.BufferedLines;
+                            result =
+                                 BufferedLines;
                         break;
                     default:
                         break;
