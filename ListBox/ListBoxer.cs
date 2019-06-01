@@ -51,7 +51,7 @@ namespace ListBoxer
                     UndoBufferedLines.AddRange(BufferedLines.Select(x => x).ToList());
                     BufferedLines.Add(inputTextBox.Text == "0" ? inputTextBox.Text : inputTextBox.Text.TrimStart('0', ' '));
                 }
-                else if (checkBox_numeric.Checked && Regex.IsMatch(inputTextBox.Text, "[1-9]"))
+                else if (checkBox_numeric.Checked && Regex.IsMatch(inputTextBox.Text, "[0-9]") && Convert.ToInt32(inputTextBox.Text).IsBetween(0,9999))
                 {
                     UndoBufferedLines.Clear();
                     UndoBufferedLines.AddRange(BufferedLines.Select(x => x).ToList());
@@ -82,12 +82,12 @@ namespace ListBoxer
                 {
                     case "Aa-Mm":
                         result =
-                             BufferedLines.Where(x => !Regex.IsMatch(inputTextBox.Text, "[1-9]"))
+                             BufferedLines.Where(x => !Regex.IsMatch(inputTextBox.Text, "[0-9]"))
                             .Where(fltr => fltr.ToLower()[0] >= 'a' && fltr.ToLower()[0] <= 'm').ToList();
                         break;
                     case "Nn-Zz":
                         result =
-                             BufferedLines.Where(x => !Regex.IsMatch(inputTextBox.Text, "[1-9]"))
+                             BufferedLines.Where(x => !Regex.IsMatch(inputTextBox.Text, "[0-9]"))
                             .Where(fltr => fltr.ToLower()[0] >= 'n' && fltr.ToLower()[0] <= 'z').ToList();
                         break;
                     case "0-100":
@@ -142,6 +142,14 @@ namespace ListBoxer
             var temp = resultlistBox.Items.Cast<string>().OrderByDescending(x => x).ToArray();
             resultlistBox.Items.Clear();
             resultlistBox.Items.AddRange(temp);
+        }
+
+        private void ListBoxer_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                addButton.PerformClick();
+            }
         }
 
     }

@@ -20,7 +20,7 @@ namespace ListBoxer
             openFileDialog.InitialDirectory = LbxDir;
             openFileDialog.ShowDialog();
 
-            Crypto.LoadAndDecrypt(File.Open(openFileDialog.FileName, FileMode.Open), chyperPass);
+            ListBoxerFunc.LoadAndDecrypt(File.Open(openFileDialog.FileName, FileMode.Open), chyperPass);
             LineReloads();
         }
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -29,7 +29,7 @@ namespace ListBoxer
             saveFileDialog.ShowDialog();
             string pString = string.Join(",",resultlistBox.Items.Cast<string>());
             byte[] byteArray = Encoding.Default.GetBytes(pString);
-            Crypto.EncryptAndSave(byteArray, saveFileDialog.FileName, chyperPass);
+            ListBoxerFunc.EncryptAndSave(byteArray, saveFileDialog.FileName, chyperPass);
         }
         private void ContentsToolStripMenuItem_Click(object sender, EventArgs e)
         {

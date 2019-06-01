@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ListBoxer
 {
-    public static class Crypto
+    public static class ListBoxerFunc
     {
         public static void LoadAndDecrypt(FileStream file, string password)
         {
@@ -62,6 +62,10 @@ namespace ListBoxer
                     fsIn.CopyTo(cs);
                 }
             }
+        }
+        public static bool IsBetween<T>(this T item, T start, T end)
+        {
+            return Comparer<T>.Default.Compare(item, start) >= 0 && Comparer<T>.Default.Compare(item, end) <= 0;
         }
     }
 }
